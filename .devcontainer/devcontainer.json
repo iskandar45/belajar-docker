@@ -1,0 +1,11 @@
+{
+    "name": "Belajar Docker",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "settings": {
+      "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "postCreateCommand": "echo 'Siap belajar Docker!'"
+  }
+  
