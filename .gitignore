@@ -1,0 +1,14 @@
+package-lock.json
+node_modules
+npm-debug.log
+yarn-error.log
+.DS_Store
+.vscode
+.idea
+*.iml
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*.sublime-settings
+*.sublime-keymap
