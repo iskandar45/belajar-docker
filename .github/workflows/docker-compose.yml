@@ -24,12 +24,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose -y
+      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+
       - name: Build and start Docker Compose
-        run: |
-          docker-compose up -d --build
+        run: docker-compose -f docker-compose.yml up -d --build
 
       - name: Tunggu service ready (opsional)
         run: sleep 10
