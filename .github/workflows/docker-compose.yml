@@ -1,0 +1,43 @@
+name: Docker Compose CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:24.0.2
+        options: --privileged  # dibutuhkan untuk docker-in-docker
+        ports:
+          - 5432:5432
+          - 8080:80
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and start Docker Compose
+        run: |
+          docker-compose up -d --build
+
+      - name: Tunggu service ready (opsional)
+        run: sleep 10
+
+      - name: Tes koneksi ke PostgreSQL (opsional)
+        run: |
+          docker exec $(docker ps -qf "name=db") pg_isready -U postgres
+
+      - name: Stop container
+        if: always()
+        run: docker-compose down
